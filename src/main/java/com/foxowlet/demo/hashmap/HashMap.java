@@ -1,7 +1,7 @@
 package com.foxowlet.demo.hashmap;
 
 public class HashMap<K, V> implements Map<K, V> {
-    private Node[] values;
+    private Node<K, V>[] values;
     private int size;
     private double threshold;
 
