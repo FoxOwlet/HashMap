@@ -51,13 +51,14 @@ public class HashMap<K, V> implements Map<K, V> {
         Node<K, V>[] oldNodes = values;
         values = new Node[values.length * 2];
         for (Node<K, V> oldNode : oldNodes) {
-            if (oldNode != null) {
-                addNode(oldNode);
-            }
+            addNode(oldNode);
         }
     }
 
     private void addNode(Node<K, V> oldNode) {
+        if (oldNode == null) {
+            return;
+        }
         int index = computeIndex(oldNode.key);
         Node<K, V> node = values[index];
         Node<K, V> lastNode = null;
@@ -80,12 +81,8 @@ public class HashMap<K, V> implements Map<K, V> {
         } else {
             lastNode.right = newNode;
         }
-        if (oldNode.left != null) {
-            addNode(oldNode.left);
-        }
-        if (oldNode.right != null) {
-            addNode(oldNode.right);
-        }
+        addNode(oldNode.left);
+        addNode(oldNode.right);
     }
 
     @Override
