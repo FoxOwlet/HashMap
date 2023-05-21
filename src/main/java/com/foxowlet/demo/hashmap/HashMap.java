@@ -14,7 +14,7 @@ public class HashMap<K, V> implements Map<K, V> {
     @Override
     public void put(K key, V value) {
         int hash = key.hashCode();
-        int index = computeIndex(key);
+        int index = computeIndex(hash);
         Node<K, V> node = values[index];
         Node<K, V> lastNode = null;
         while (node != null) {
@@ -59,7 +59,7 @@ public class HashMap<K, V> implements Map<K, V> {
         if (oldNode == null) {
             return;
         }
-        int index = computeIndex(oldNode.key);
+        int index = computeIndex(oldNode.hash);
         Node<K, V> node = values[index];
         Node<K, V> lastNode = null;
         while (node != null) {
@@ -88,7 +88,7 @@ public class HashMap<K, V> implements Map<K, V> {
     @Override
     public V get(K key) {
         int hash = key.hashCode();
-        Node<K, V> node = values[computeIndex(key)];
+        Node<K, V> node = values[computeIndex(hash)];
         while (node != null) {
             if (hash == node.hash) {
                 if (key.equals(node.key)) {
@@ -104,8 +104,8 @@ public class HashMap<K, V> implements Map<K, V> {
         return null;
     }
 
-    private int computeIndex(K key) {
-        return Math.abs(key.hashCode()) % values.length;
+    private int computeIndex(int hash) {
+        return Math.abs(hash) % values.length;
     }
 
     private static class Node<K, V> {
